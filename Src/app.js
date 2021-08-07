@@ -22,23 +22,10 @@ hbs.registerPartials(partialsPath)
 //Setup Static Directory
 app.use(express.static(publicDirectoryPath))
 
-app.get('/products',(req,res)=>{
-    if(!req.query.search){
-        res.send({
-            error:'You must provide a search item'
-        })
-    }
-   else{
-    res.send({
-        products:[]
-    })
-}
-    console.log(req.query.search)
-})
 
 app.get('',(req,res)=>{
     res.render('index',{
-        title:'Weather',
+        title:'AccuBreeze',
         name:'Piyush Singhal'
     })
 })
@@ -60,7 +47,7 @@ app.get('/help',(req,res)=>{
 app.get('/weather',(req,res)=>{
     if(!req.query.address){
         return res.send({
-            error:'You must provide a address'
+            error:'You must provide an address'
         })
     }
     const jaddress=(req.query.address) 
@@ -71,7 +58,7 @@ app.get('/weather',(req,res)=>{
             if (error) { return res.send({error}) }
             res.send({
                 Location:response.Location,
-                forecast:(data)
+                forecast:data
             })
         })
     })
@@ -84,14 +71,14 @@ app.listen(port,()=>{
 app.get('/help/*',(req,res)=>{
     res.render('404page',{
         name:'Piyush Singhal',
-        error:'Help article not found'
+        error:'Help article not found!'
     })
 })
 
 app.get('/*',(req,res)=>{
     res.render('404page',{
-        title:404,
+        title:'ERROR 404',
         name:'Piyush Singhal',
-        error:'Page not found'
+        error:'Page not found!'
     })
 })
